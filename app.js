@@ -22,12 +22,16 @@ var indexRoutes      = require("./routes/index"),
     commentRoutes    = require("./routes/comments");
 
 
+
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
-// local db connection for development
+// local c9 db, created in terminal with: export DBURL=mongodb://localhost/yelp_db
 // mongoose.connect("mongodb://localhost/yelp_db");
-// db connection with mLab for production
-mongoose.connect("mongodb://admin:password@ds159459.mlab.com:59459/yelpcamp");
+
+// hosted db, DBURL entered in heroku (variables) or in terminal by entering: 
+// $ heroku config:set dbName=url
+ mongoose.connect(process.env.DBURL);
+
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash()); // has to be placed bevor passport configuration
