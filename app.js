@@ -30,7 +30,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // hosted db, DBURL entered in heroku (variables) or in terminal by entering: 
 // $ heroku config:set dbName=url
- mongoose.connect(process.env.DBURL);
+
+// if the hosted db is "broken", we use the local as backup
+var dburl = process.env.DBURL || "mongodb://localhost/yelp_db";
+mongoose.connect(dburl);
 
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
