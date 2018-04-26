@@ -24,7 +24,10 @@ var indexRoutes      = require("./routes/index"),
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
-mongoose.connect("mongodb://localhost/yelp_db");
+// local db connection for development
+// mongoose.connect("mongodb://localhost/yelp_db");
+// db connection with mLab for production
+mongoose.connect("mongodb://admin:password@ds159459.mlab.com:59459/yelpcamp");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash()); // has to be placed bevor passport configuration
